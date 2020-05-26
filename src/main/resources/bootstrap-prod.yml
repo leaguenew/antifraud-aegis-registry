@@ -1,0 +1,75 @@
+server:
+        post: 8761
+
+spring:
+        application:
+              name: aegis-eureka
+
+eureka:
+        instance:
+            # use ip to register
+            prefer-ip-address: true
+            # heart beat interval
+            lease-renewal-interval-in-seconds: 3
+            # service expiration duration: remove the service when exceed the expire time
+            lease-expiration-duration-in-seconds: 7
+
+        client:
+            # register self to eureka server
+            register-with-eureka: true
+            # fetch register server from eureka server
+            fetch-registry: true
+            # update frequency
+            eureka-service-url-poll-interval-seconds: 60
+            #
+            registry-fetch-interval-seconds: 5
+            # eureka server ip address dependence by service registration and service discovery
+            serviceUrl:
+                defaultZone: http://localhost:8761/eureka/
+
+        server:
+            # self preservation model, suggest make it false in prodution mode
+            enable-self-preservation: false
+            #
+            eviction-interval-timer-in-ms: 3000
+            wait-time-in-ms-when-sync-empty: 6000000
+            #
+            peer-eureka-nodes-update-interval-ms: 60000
+            peer-node-read-timeout-ms: 60000
+
+logging:
+        config: classpath:logback-spring.xml
+
+log:
+     path: /Users/wahaha/logs/antifraud-aegis-registry
+     level: INFO
+
+
+
+info:
+      version: @project.version@
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  server:
+#    port: 8013
+    servlet:
+      context-path: /
+    ssl:
+      enabled: false
+  endpoint:
+    health:
+      show-details: always
+    hystrix:
+      stream:
+        enabled: true
+  health:
+          elasticsearch:
+                    enabled: false
+          redis:
+            enabled: false
